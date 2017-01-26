@@ -2,6 +2,7 @@
     <qresource prefix="/data">
         <file>testresources/include-sample.md.in</file>
         <file>testresources/sample.cpp</file>
+        <file>testresources/sample-nested.cpp</file>
         <file>testresources/include-sample.md</file>
         <file>testresources/missing-sample.md.in</file>
         <file>testresources/include-sample-cmake.md</file>
@@ -9,5 +10,8 @@
         <file>testresources/include-sample-cmake.md.in</file>
         <file>testresources/snippet-sample.md</file>
         <file>testresources/snippet-sample-minted.tex</file>
+        <file>testresources/snippet-sample-nested-1-minted.tex</file>
+        <file>testresources/snippet-sample-nested-2-minted.tex</file>
+        <file>testresources/snippet-sample-nested-3-minted.tex</file>
     </qresource>
 </RCC>

@@ -19,6 +19,7 @@ private:
 private Q_SLOTS:
     void testSnippetSample();
     void testSnippetSampleMinted();
+    void testSnippetSampleNested();
     void testIncludeSample();
     void testCMakeFormatIncludeSample();
     void testErrorOnMissingSnippet();
@@ -95,6 +96,33 @@ void SnippetExtractorTests::testSnippetSampleMinted()
     const QString expected = loadResource(":/data/testresources/snippet-sample-minted.tex");
     QCOMPARE(result, expected);
   } catch (const Exception& ex) {
+    QFAIL(ex.message().toLocal8Bit());
+  }
+}
+
+void SnippetExtractorTests::testSnippetSampleNested()
+{
+  try {
+    QString args = QString("%1,%2,%3,%4")
+      .arg(":/data/testresources/sample-nested.cpp")
+      .arg("sample-nested-1").arg("c++").arg("minted");
+    QString pos;
+    QString result = process_snippet(args,pos);
+    QString expected = loadResource(":/data/testresources/snippet-sample-nested-1-minted.tex");
+    QCOMPARE(result, expected);
+    args = QString("%1,%2,%3,%4")
+      .arg(":/data/testresources/sample-nested.cpp")
+      .arg("sample-nested-2").arg("c++").arg("minted");
+    result = process_snippet(args,pos);
+    expected = loadResource(":/data/testresources/snippet-sample-nested-2-minted.tex");
+    QCOMPARE(result, expected);
+    args = QString("%1,%2,%3,%4")
+      .arg(":/data/testresources/sample-nested.cpp")
+      .arg("sample-nested-3").arg("c++").arg("minted");
+    result = process_snippet(args,pos);
+    expected = loadResource(":/data/testresources/snippet-sample-nested-3-minted.tex");
+    QCOMPARE(result, expected);
+   } catch (const Exception& ex) {
     QFAIL(ex.message().toLocal8Bit());
   }
 }
