@@ -17,6 +17,8 @@ private:
     QByteArray loadResource(const QString& path);
 
 private Q_SLOTS:
+    void testSnippetSample();
+    void testSnippetSampleMinted();
     void testIncludeSample();
     void testCMakeFormatIncludeSample();
     void testErrorOnMissingSnippet();
@@ -66,6 +68,37 @@ void SnippetExtractorTests::testErrorOnMissingSnippet()
         //all good
     }
 }
+
+void SnippetExtractorTests::testSnippetSample()
+{
+  try {
+    const QString args = QString("%1,%2,%3").arg(":/data/testresources/sample.cpp")
+      .arg("sample").arg("cpp");
+    const QString pos;
+    const QString result = process_snippet(args,pos);
+    const QString expected = loadResource(":/data/testresources/snippet-sample.md");
+    QCOMPARE(result, expected);
+  } catch (const Exception& ex) {
+    QFAIL(ex.message().toLocal8Bit());
+  }
+}
+
+
+void SnippetExtractorTests::testSnippetSampleMinted()
+{
+  try {
+    const QString args = QString("%1,%2,%3,%4")
+      .arg(":/data/testresources/sample.cpp")
+      .arg("sample").arg("c++").arg("minted");
+    const QString pos;
+    const QString result = process_snippet(args,pos);
+    const QString expected = loadResource(":/data/testresources/snippet-sample-minted.tex");
+    QCOMPARE(result, expected);
+  } catch (const Exception& ex) {
+    QFAIL(ex.message().toLocal8Bit());
+  }
+}
+
 
 QTEST_APPLESS_MAIN(SnippetExtractorTests)
 

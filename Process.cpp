@@ -65,16 +65,37 @@ QString process(const QString inputfilename)
     return result;
 }
 
+
+void get_snippet_guards(const QString mode, const QString snippet,
+                        const QString style, int linecounter,
+                        QString& opener, QString& closer)
+{
+  if(mode == QString("minted")) {
+    opener = QString("\\begin{minted}{%1}\n").arg(style);
+    closer = QString("\\end{minted}\n");
+  } else {
+    // default to markdown as it always was the default
+    opener = QString("~~~ {#%1 .%2 .numberLines startFrom=\"%3\"}\n")
+      .arg(snippet)
+      .arg(style)
+      .arg(linecounter + 1);
+    closer = QString("~~~\n");
+  }
+}
+
 QString process_snippet(const QString argumentString, const QString& position)
 {
     const QStringList arguments = argumentString.split(u(","));
-    if (arguments.count() != 3) {
+    if (arguments.count() != 3 && arguments.count() != 4) {
         throw Exception(u("%1: Argument error!").arg(position));
     }
     const QString filename = arguments[0].trimmed();
     const QString snippet = arguments[1].trimmed();
     const QString style = arguments[2].trimmed();
-
+    QString mode = QString("markdown");
+    if (arguments.count() == 4) {
+      mode = arguments[3].trimmed();
+    }
     QFile sourceFile(filename);
     if (!sourceFile.open(QIODevice::ReadOnly)) {
         throw Exception(u("%1: Error opening file \"%2\" for reading!").arg(position).arg(filename));
@@ -87,6 +108,8 @@ QString process_snippet(const QString argumentString, const QString& position)
     QString result;
     while (!stream.atEnd()) {
         ++linecounter;
+        QString opener, closer;
+        get_snippet_guards(mode, snippet, style, linecounter, opener, closer);
         const QString positionInFile = u("%1:%2").arg(filename).arg(linecounter);
         auto line = stream.readLine();
         if (reading) {
@@ -96,7 +119,7 @@ QString process_snippet(const QString argumentString, const QString& position)
                 result.append(line + u("\n"));
             } else {
                 reading = false;
-                result += u("~~~\n");
+                result += closer;
                 complete = true;
                 break;
             }
@@ -125,10 +148,6 @@ QString process_snippet(const QString argumentString, const QString& position)
                 if (name == snippet) {
                     reading = true;
                     found = true;
-                    const QString opener = u("~~~ {#%1 .%2 .numberLines startFrom=\"%3\"}\n")
-                            .arg(snippet)
-                            .arg(style)
-                            .arg(linecounter + 1);
                     result += opener;
                 }
             }

@@ -7,5 +7,7 @@
         <file>testresources/include-sample-cmake.md</file>
         <file>testresources/sample-cmake-format.txt</file>
         <file>testresources/include-sample-cmake.md.in</file>
+        <file>testresources/snippet-sample.md</file>
+        <file>testresources/snippet-sample-minted.tex</file>
     </qresource>
 </RCC>
