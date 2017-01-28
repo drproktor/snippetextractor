@@ -71,7 +71,7 @@ void get_snippet_guards(const QString mode, const QString snippet,
                         QString& opener, QString& closer)
 {
   if(mode == QString("minted")) {
-    opener = QString("\\begin{minted}{%1}\n").arg(style);
+    opener = QString("\\begin{minted}[breaklines]{%1}\n").arg(style);
     closer = QString("\\end{minted}\n");
   } else {
     // default to markdown as it always was the default
