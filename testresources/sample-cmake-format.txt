@@ -1,4 +1,4 @@
 ##@@snippet_begin(cmakeformat)
 test
 test2
-##@@snippet_end
+##@@snippet_end(cmakeformat)

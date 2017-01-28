@@ -1,6 +1,4 @@
 This is some arbitrary text that should not be clobbered.
 
-~~~ {#sample .cpp .numberLines startFrom="2"}
-//test
-~~~
+@@snippet(:/data/testresources/sample.cpp, sample, cpp)
 Neither should this.
