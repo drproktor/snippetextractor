@@ -107,6 +107,7 @@ will produce
   std::cout << "Hello World!" << std::endl;
 
   return 0;
+\end{minted}
 ~~~
 
 and directly return it on the command line (standard output). This can be useful
