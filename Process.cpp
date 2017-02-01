@@ -73,6 +73,9 @@ void get_snippet_guards(const QString mode, const QString snippet,
   if(mode == QString("minted")) {
     opener = QString("\\begin{minted}[breaklines]{%1}\n").arg(style);
     closer = QString("\\end{minted}\n");
+  } else if(mode == QString("tabminted")) {
+    opener = QString("\\begin{tabminted}[breaklines]{%1}\n").arg(style);
+    closer = QString("\\end{tabminted}\n");
   } else {
     // default to markdown as it always was the default
     opener = QString("~~~ {#%1 .%2 .numberLines startFrom=\"%3\"}\n")
